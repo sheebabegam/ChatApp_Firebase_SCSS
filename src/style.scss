@@ -54,6 +54,7 @@
         padding: 15px;
         border: none;
         width: 250px;
+        outline: none;
         border-bottom: 1px solid #a7bcff;
         &::placeholder {
           color: rgb(175, 175, 175);
@@ -79,6 +80,24 @@
 
         img {
           width: 32px;
+        }
+      }
+
+      .controlOptions {
+        padding: 15px;
+        border: none;
+        width: 100%;
+        outline: none;
+        border-bottom: 1px solid #a7bcff;
+        &::placeholder {
+          color: rgb(175, 175, 175);
+        }
+      }
+      select {
+        .option {
+          &::placeholder {
+            color: rgb(175, 175, 175);
+          }
         }
       }
     }
@@ -231,7 +250,7 @@
         background-color: #ddddf7;
         padding: 10px;
         // height: calc(100% - 160px);
-        height: 600px;
+        height: 550px;
         overflow-y: scroll;
 
         .message {

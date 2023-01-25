@@ -14,7 +14,7 @@ const Chats = () => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
         setChats(doc.data());
-        console.log(doc.data());
+        console.log("Chat DAta", doc.data());
       });
 
       return () => {

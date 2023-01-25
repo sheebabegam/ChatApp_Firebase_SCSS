@@ -18,6 +18,8 @@ const Search = () => {
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
 
+  const [option, setOption] = useState("");
+  console.log("Options", option);
   // const { currentUser } = useContext(AuthContext);
 
   // console.log(currentUser.uid); //rnD2Pc09L9gGMdHL5XIPiByKhCp1
@@ -49,6 +51,10 @@ const Search = () => {
 
   const { currentUser } = useContext(AuthContext);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   console.log("Current Username", currentUser);
 
   const currentObject = todos.find(
@@ -60,43 +66,46 @@ const Search = () => {
   console.log("Display Name", searchObject);
 
   const handleSearch = async () => {
-    if (currentObject.category == searchObject.category) {
-      const q = query(
-        collection(db, "users"),
-        where("displayName", "==", username)
-        // where("category", "==", "User")
-      );
+    // if (currentObject.category == searchObject.category) {
 
-      try {
-        const querySnapshot = await getDocs(q); //  you can retrieve all documents in a collection by omitting the where() filter entirely:
-        querySnapshot.forEach((doc) => {
-          setUser(doc.data());
-        });
-      } catch (err) {
-        setErr(true);
-      }
-    } else {
-      console.log("User Not Found");
-      setErr(true);
+    const q = query(
+      collection(db, "users"),
+      // where("displayName", "==", username),
+      where("category", "==", "user")
+    );
+
+    try {
+      const querySnapshot = getDocs(q); //  you can retrieve all documents in a collection by omitting the where() filter entirely:
+      querySnapshot.forEach((doc) => {
+        console.log(doc);
+        setUser(doc.data());
+        // setUser((prevData) => [...prevData, doc.data()]);
+      });
+    } catch (err) {
+      console.error(err);
+      // setErr(true);
     }
-
-    // const handleSearch = async () => {
-    //   const q = query(
-    //     collection(db, "users"),
-    //     where("displayName", "==", username)
-    //   );
-
-    // const handleSearch = async () => {
-    //   const q = query(
-    //     collection(db, "users"),
-    //     where("searchObject.category", "==", username)
-    //   );
-    // console.log();
-
-    // You can also retrieve multiple documents with one request by querying documents in a collection.
-    // For example, you can use where() to query for all of the documents that meet a certain condition,
-    // then use get() to retrieve the results:
   };
+
+  const handleSearch1 = async () => {
+    const q = query(collection(db, "users"), where("category", "==", option));
+
+    try {
+      const querySnapshot = await getDocs(q); //  you can retrieve all documents in a collection by omitting the where() filter entirely:
+      querySnapshot.forEach((doc) => {
+        console.log(doc);
+        // setUser((prevData) => [...prevData, doc.data()]);
+        setUser(doc.data());
+      });
+    } catch (err) {
+      // console.error(err);
+      // setErr(true);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch1();
+  }, [option]);
 
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
@@ -165,6 +174,21 @@ const Search = () => {
           User not found!
         </span>
       )}
+
+      <select
+        required
+        name="options"
+        value={option}
+        className="controlOptions"
+        onChange={(e) => {
+          setOption(e.target.value);
+        }}
+      >
+        <option className="option">Filter category</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+        <option value="business">Business</option>
+      </select>
       {user && (
         <div className="userChat" onClick={handleSelect}>
           <img src={user.photoURL} alt="" />

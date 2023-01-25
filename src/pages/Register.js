@@ -11,13 +11,16 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  console.log("DB is", db);
+
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-    const file = e.target[3].files[0];
+    const category = e.target[3].value;
+    const file = e.target[4].files[0];
 
     try {
       //Create user
@@ -33,6 +36,7 @@ const Register = () => {
             //Update profile
             await updateProfile(res.user, {
               displayName,
+              category,
               photoURL: downloadURL,
             });
             //create user on firestore
@@ -40,6 +44,7 @@ const Register = () => {
               uid: res.user.uid,
               displayName,
               email,
+              category,
               photoURL: downloadURL,
             });
 
@@ -68,6 +73,12 @@ const Register = () => {
           <input required type="text" placeholder="display name" />
           <input required type="email" placeholder="email" />
           <input required type="password" placeholder="password" />
+          <select required name="options" className="controlOptions">
+            <option className="option">Choose your category</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+            <option value="business">Business</option>
+          </select>
           <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
             <img src={Add} alt="" />

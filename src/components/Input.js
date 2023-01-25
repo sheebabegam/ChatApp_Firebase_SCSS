@@ -21,6 +21,8 @@ const Input = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
+  console.log("User Catg", currentUser);
+
   const handleSend = async () => {
     if (img) {
       const storageRef = ref(storage, uuid());
@@ -60,6 +62,9 @@ const Input = () => {
       [data.chatId + ".lastMessage"]: {
         text,
       },
+      // [data.chatId + ".category"]: {
+      //   ,
+      // },
       [data.chatId + ".date"]: serverTimestamp(),
     });
 
