@@ -178,15 +178,35 @@
 
         .searchForm {
           padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
 
           input {
             background-color: transparent;
             border: none;
             color: white;
             outline: none;
+            width: 50%;
 
             &::placeholder {
               color: lightgray;
+            }
+          }
+
+          select {
+            background-color: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            width: 50%;
+
+            option {
+              background-color: #3e3c61;
+              border: none;
+              color: white;
+              outline: none;
+              width: 50%;
             }
           }
         }
@@ -212,13 +232,21 @@
         }
 
         .userChatInfo {
-          span {
-            font-size: 18px;
-            font-weight: 500;
-          }
-          p {
-            font-size: 14px;
-            color: lightgray;
+          width: 100%;
+          .userState {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+
+            span {
+              font-size: 18px;
+              font-weight: 500;
+            }
+            p {
+              font-size: 14px;
+              color: lightgray;
+            }
           }
         }
       }

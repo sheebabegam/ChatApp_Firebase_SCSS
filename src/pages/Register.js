@@ -46,6 +46,7 @@ const Register = () => {
               email,
               category,
               photoURL: downloadURL,
+              isOnline: true,
             });
 
             //create empty user chats on firestore

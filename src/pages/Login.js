@@ -1,11 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  getDoc,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [err, setErr] = useState(false);
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  console.log("Loggggg", auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +31,16 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
+
+      const dbRef = await doc(db, "users", currentUser.uid);
+
+      console.log("Login DB", dbRef);
+
+      await updateDoc(dbRef, {
+        isOnline: true,
+      });
+
+      await navigate("/");
     } catch (err) {
       setErr(true);
     }
