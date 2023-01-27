@@ -69,13 +69,13 @@ const Navbar = () => {
 
   // --------------
 
-  const db = getDatabase();
-  const presenceRef = ref(db, "users", currentUser.uid);
-  console.log("presenceRef is------->", presenceRef);
+  // const db = getDatabase();
+  // const presenceRef = ref(db, "users", currentUser.uid);
+  // console.log("presenceRef is------->", presenceRef);
 
-  // Write a string when this client loses connection
-  const dbRef = doc(db, "users", currentUser.uid);
-  onDisconnect(presenceRef).set("I disconnected!");
+  // // Write a string when this client loses connection
+  // const dbRef = doc(db, "users", currentUser.uid);
+  // onDisconnect(presenceRef).set("I disconnected!");
 
   return (
     <div>
